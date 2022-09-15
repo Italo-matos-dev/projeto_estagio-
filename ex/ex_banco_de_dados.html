@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script type="text/javascript">
+    var db = openDatabase("Meu Banco", "2.0", "My base", 4048);
+    db.transaction(function(criar){
+            criar.executeSql("CREATE TABLE users (ID PRIMARY KEY, nome TEXT, senha TEXT)");
+        })
+
+    function salvar(){
+     var nome = document.getElementById('nome').value;
+     var senha = document.getElementById('senha').value;
+     db.transaction(function(armazenar){
+        armazenar.executeSql("INSERT INTO users (nome, senha) VALUES (?,?)", [nome, senha]);
+    })}
+  </script>
+  </head>
+<body>
+  <form onsubmit="salvar()">
+    <input type="text" id="nome" name="" placeholder="Digite seu nome"><br>
+    <input type="password" id="senha" placeholder="Digite sua senha" name=""><br>
+    <input type="submit" value="Login">
+  </form>
+</body>
+</html>
